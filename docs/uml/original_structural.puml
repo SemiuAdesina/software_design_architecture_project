@@ -1,0 +1,57 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+title Original System - Structural (Classes)
+
+package "ParkingManager.py" {
+  class ParkingLot {
+    - capacity: int
+    - evCapacity: int
+    - level: int
+    - slotid: int
+    - slotEvId: int
+    - numOfOccupiedSlots: int
+    - numOfOccupiedEvSlots: int
+    - slots: Vehicle[]
+    - evSlots: ElectricVehicle[]
+    + createParkingLot(capacity, evcapacity, level)
+    + getEmptySlot()
+    + getEmptyEvSlot()
+    + park(regnum, make, model, color, ev, motor)
+    + leave(slotid, ev)
+    + edit(slotid, regnum, make, model, color, ev)
+    + status()
+    + chargeStatus()
+    + getRegNumFromColor(color)
+    + getSlotNumFromRegNum(regnum)
+  }
+}
+
+package "Vehicle.py" {
+  class Vehicle {
+    - regnum: str
+    - make: str
+    - model: str
+    - color: str
+  }
+  class Car extends Vehicle
+  class Truck extends Vehicle
+  class Motorcycle extends Vehicle
+}
+
+package "ElectricVehicle.py" {
+  class ElectricVehicle {
+    - regnum: str
+    - make: str
+    - model: str
+    - color: str
+    - charge: int
+  }
+  class ElectricCar extends ElectricVehicle
+  class ElectricBike extends ElectricVehicle
+}
+
+ParkingLot --> Vehicle
+ParkingLot --> ElectricVehicle
+@enduml

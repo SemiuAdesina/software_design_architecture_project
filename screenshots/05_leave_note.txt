@@ -1,0 +1,11 @@
+Screenshot 5: Leave Functionality
+
+Due to Tk 8.5 rendering limitations on macOS, the Slot # input field was not clearly visible in the GUI for manual screenshot capture.
+
+However, the Leave functionality is fully implemented and tested:
+- Location: src/redesign/views/app_tk.py, _leave() method (lines 220-244)
+- User enters slot number in the slot_var Entry widget
+- Calls controller.leave(slot, is_ev) 
+- Returns success/failure message
+
+The functionality works correctly when tested programmatically.

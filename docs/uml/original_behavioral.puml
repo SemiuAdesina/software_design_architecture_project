@@ -1,0 +1,30 @@
+@startuml
+skinparam arrowColor Black
+skinparam sequenceMessageAlign center
+
+title Original System - Behavioral (Park & Leave Sequence)
+
+actor User
+participant GUI as "tkinter GUI"
+participant ParkingLot
+participant Vehicle
+participant ElectricVehicle as EV
+
+User -> GUI : click Create Parking Lot
+GUI -> ParkingLot : createParkingLot(capacity, evcapacity, level)
+
+User -> GUI : enter vehicle details
+alt EV == 1
+  GUI -> ParkingLot : park(reg, make, model, color, ev=1, motor)
+  ParkingLot -> EV : new ElectricCar/ElectricBike
+  ParkingLot --> GUI : slot number or -1
+else regular
+  GUI -> ParkingLot : park(reg, make, model, color, ev=0, motor)
+  ParkingLot -> Vehicle : new Car/Motorcycle
+  ParkingLot --> GUI : slot number or -1
+end
+
+User -> GUI : remove vehicle
+GUI -> ParkingLot : leave(slot, ev?)
+ParkingLot --> GUI : success/failure
+@enduml

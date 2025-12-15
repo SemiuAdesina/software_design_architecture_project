@@ -1,0 +1,80 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+title Redesigned System - Structural (MVC + Patterns)
+
+package models {
+  class Vehicle {
+    +registration_number: str
+    +make: str
+    +model: str
+    +color: str
+    +get_type(): str
+  }
+  class Car extends Vehicle
+  class Truck extends Vehicle
+  class Motorcycle extends Vehicle
+
+  class ElectricVehicle extends Vehicle {
+    +charge_percent: int
+  }
+  class ElectricCar extends ElectricVehicle
+  class ElectricBike extends ElectricVehicle
+
+  class ParkingSlot {
+    +index: int
+    +is_electric: bool
+    +vehicle: Vehicle
+    +is_empty(): bool
+  }
+
+  class ParkingLot {
+    +level: int
+    +regular_capacity: int
+    +ev_capacity: int
+    +regular_slots: List<ParkingSlot>
+    +ev_slots: List<ParkingSlot>
+    +park_regular(v: Vehicle): int
+    +park_ev(v: ElectricVehicle): int
+    +leave(slot, is_ev): bool
+  }
+}
+
+package factories {
+  class VehicleFactory {
+    +create_vehicle(kind, reg, make, model, color): Vehicle
+    +create_electric(kind, reg, make, model, color): ElectricVehicle
+  }
+}
+
+package strategies {
+  interface AllocationStrategy {
+    +allocate(lot: ParkingLot, v: Vehicle): int
+  }
+  class RegularFirstStrategy implements AllocationStrategy
+  class ElectricOnlyStrategy implements AllocationStrategy
+}
+
+package controllers {
+  class ParkingController {
+    -lot: ParkingLot
+    -allocation_strategy: AllocationStrategy
+    +create_lot(level, regular, ev)
+    +park(v: Vehicle): int
+    +park_ev(v: ElectricVehicle): int
+    +leave(slot, is_ev): bool
+  }
+}
+
+package views {
+  class App <<UI>>
+}
+
+App --> ParkingController
+ParkingController --> ParkingLot
+ParkingController ..> AllocationStrategy
+VehicleFactory ..> Vehicle
+VehicleFactory ..> ElectricVehicle
+ParkingLot --> ParkingSlot
+@enduml

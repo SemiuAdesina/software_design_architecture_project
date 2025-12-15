@@ -1,0 +1,24 @@
+@startuml
+skinparam arrowColor Black
+skinparam sequenceMessageAlign center
+
+title Redesigned System - Behavioral (Park EV via Strategy)
+
+actor User
+participant App as "Tk View"
+participant Controller as "ParkingController"
+participant Strategy as "AllocationStrategy"
+participant Lot as "ParkingLot"
+participant Factory as "VehicleFactory"
+
+User -> App : enter EV vehicle
+App -> Factory : create_electric(kind, reg, make, model, color)
+Factory --> App : ElectricCar/ElectricBike
+App -> Controller : park_ev(vehicle)
+Controller -> Strategy : allocate(lot, vehicle)
+Strategy -> Lot : park_ev(vehicle)
+Lot --> Strategy : slot number or None
+Strategy --> Controller : slot or None
+Controller --> App : slot or None
+App --> User : success or full
+@enduml
