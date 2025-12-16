@@ -58,3 +58,4 @@ Notes:
 - On macOS, you may need to grant “Screen Recording” permission to your terminal (System Settings → Privacy & Security → Screen Recording) for ImageGrab to work.
 - If ImageGrab is unavailable or permission is denied, the script will print a helpful message.
 # software_design_architecture_project
+ 
