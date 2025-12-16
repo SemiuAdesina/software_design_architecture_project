@@ -59,3 +59,5 @@ Notes:
 - If ImageGrab is unavailable or permission is denied, the script will print a helpful message.
 # software_design_architecture_project
  
+
+Badge test for YOLO/Pair
